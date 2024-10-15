@@ -10,13 +10,14 @@ use App\Services\FreeDictionaryApi\Entities\WordEntity;
 
 class Words extends BaseEndpoint
 {
-    public function get(string $word): WordEntity
+    public function get(string $word): WordEntity | null
     {
-        $body =  $this->service->api
-            ->get("/$word")
-            ->json();
+        $response =  $this->service->api
+            ->get("/$word");
 
-        $wordEntity = (new WordEntityBuilder)
+        if ($response->failed()) return null;
+        $body = $response->json();
+        return (new WordEntityBuilder)
             ->setWord($body[0]['word'])
             ->setPhonetics(
                 collect($body[0]['phonetics'])->map(
@@ -59,6 +60,5 @@ class Words extends BaseEndpoint
             ->setLicense($body[0]['license']['name'], $body[0]['license']['url'])
             ->setSourceUrls($body[0]['sourceUrls'])
             ->build();
-        return $wordEntity;
     }
 }
