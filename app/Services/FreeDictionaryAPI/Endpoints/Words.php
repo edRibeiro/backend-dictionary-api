@@ -12,7 +12,7 @@ class Words extends BaseEndpoint
 {
     public function get(string $word): WordEntity
     {
-        return $this->service->api
+        $body =  $this->service->api
             ->get("/$word")
             ->json();
 
