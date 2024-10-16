@@ -14,4 +14,24 @@ class LicenseEntity implements ArrayableInterface
             'url' => $this->url
         ];
     }
+
+    /**
+     * Gets the name.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Gets the url.
+     *
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
 }

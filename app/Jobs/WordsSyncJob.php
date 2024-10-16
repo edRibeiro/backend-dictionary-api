@@ -2,9 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Models\Word;
 use App\Services\FreeDictionaryApi\Facades\FreeDictionaryApi;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redis;
 
 class WordsSyncJob implements ShouldQueue
@@ -24,13 +26,37 @@ class WordsSyncJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $word = FreeDictionaryApi::words()->get($this->word);
-        if ($word) {
-            // @TODO pressitir no banco de dados
-            logger("Palavrea encontrada: $this->word.");
+        $wordEntity = FreeDictionaryApi::words()->get($this->word);
+        if ($wordEntity) {
+            $wordModel = Word::create(['word' => $wordEntity->getWord(), 'license' => $wordEntity->getLicense()->getName(), 'license_url' => $wordEntity->getLicense()->getUrl()]);
+            foreach ($wordEntity->getPhonetics() as $key => $phonetic) {
+                $wordModel->phonetics()->create(['text' => $phonetic->getText(), 'audio' => $phonetic->getAudio(), 'source_url' => $phonetic->getSourceUrl(), 'license' => $phonetic->getLicense()->getUrl()]);
+            }
+            foreach ($wordEntity->getMeanings() as $key => $meaning) {
+                $meaningModel =  $wordModel->meanings()->create(['part_of_speech' => $meaning->getPartOfSpeech()]);
+                foreach ($meaning->getDefinitions() as $key => $definition) {
+                    $definitionData = $definition->toArray();
+                    $definition = $meaningModel->definitions()->create(Arr::only($definitionData, ['definition', 'example']));
+                    $definition->synonyms()->createMany(
+                        Arr::map($definitionData['synonyms'], function (string $item, int $key) {
+                            return ['word' => $item];
+                        })
+                    );
+                    $definition->antonyms()->createMany(
+                        Arr::map($definitionData['antonyms'], function (string $item, int $key) {
+                            return ['word' => $item];
+                        })
+                    );
+                }
+                $meaningModel->synonyms()->createMany(Arr::map($meaning->getSynonyms(), function (string $item, int $key) {
+                    return ['word' => $item];
+                }));
+                $meaningModel->antonyms()->createMany(Arr::map($meaning->getAntonyms(), function (string $item, int $key) {
+                    return ['word' => $item];
+                }));
+            }
         } else {
-            $exists = Redis::sadd('no_found_word', $this->word);
-            logger()->error("no_found_word:$this->word.");
+            Redis::sadd('no_found_word', $this->word);
         }
     }
 }

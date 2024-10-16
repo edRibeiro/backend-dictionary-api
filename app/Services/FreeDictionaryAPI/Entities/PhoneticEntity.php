@@ -20,4 +20,44 @@ class PhoneticEntity implements ArrayableInterface
             'license' => !empty($this->license) ? $this->license->toArray() : null
         ];
     }
+
+    /**
+     * Gets the text.
+     *
+     * @return string|null
+     */
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    /**
+     * Gets the audio.
+     *
+     * @return string|null
+     */
+    public function getAudio(): ?string
+    {
+        return $this->audio;
+    }
+
+    /**
+     * Gets the license.
+     *
+     * @return LicenseEntity|null
+     */
+    public function getLicense(): ?LicenseEntity
+    {
+        return $this->license;
+    }
+
+    /**
+     * Gets the sourceUrl.
+     *
+     * @return string|null
+     */
+    public function getSourceUrl(): ?string
+    {
+        return $this->sourceUrl;
+    }
 }

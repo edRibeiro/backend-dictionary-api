@@ -22,4 +22,54 @@ class WordEntity implements ArrayableInterface
             'sourceUrls' => $this->sourceUrls,
         ];
     }
+
+    /**
+     * Gets the word.
+     *
+     * @return string
+     */
+    public function getWord()
+    {
+        return $this->word;
+    }
+
+    /**
+     * Gets the phonetics.
+     *
+     * @return array
+     */
+    public function getPhonetics()
+    {
+        return $this->phonetics;
+    }
+
+    /**
+     * Gets the meanings.
+     *
+     * @return array
+     */
+    public function getMeanings()
+    {
+        return $this->meanings;
+    }
+
+    /**
+     * Gets the license.
+     *
+     * @return LicenseEntity
+     */
+    public function getLicense()
+    {
+        return $this->license;
+    }
+
+    /**
+     * Gets the sourceUrls.
+     *
+     * @return array
+     */
+    public function getSourceUrls()
+    {
+        return $this->sourceUrls;
+    }
 }
