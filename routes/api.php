@@ -8,9 +8,8 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function () {
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+    Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
-    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
 });
