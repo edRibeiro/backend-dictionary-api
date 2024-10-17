@@ -34,8 +34,13 @@ class Word extends Model
         return $this->hasMany(SourceUrl::class);
     }
 
-    public function users(): BelongsToMany
+    public function viewer(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_word')->withTimestamps();
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
     }
 }

@@ -70,12 +70,15 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    /**
-     * The words that belong to the user.
-     */
-    public function words(): BelongsToMany
+    public function history(): BelongsToMany
     {
         return $this->belongsToMany(Word::class, 'user_word', 'user_id', 'word_id')
+            ->withTimestamps();
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Word::class, 'favorites', 'user_id', 'word_id')
             ->withTimestamps();
     }
 }
