@@ -16,7 +16,7 @@ class UserController extends Controller
 
     function history(): JsonResponse
     {
-        $history =     Word::join('user_word', 'words.id', '=', 'user_word.word_id')
+        $history = Word::join('user_word', 'words.id', '=', 'user_word.word_id')
             ->where('user_word.user_id', '=', auth()->user()->id)
             ->select('words.word', 'user_word.created_at as added')
             ->cursorPaginate();
@@ -25,6 +25,10 @@ class UserController extends Controller
 
     function favorites(): JsonResponse
     {
-        return response()->json(['message' => 'Not Implemented'], 501);
+        $history = Word::join('favorites', 'words.id', '=', 'favorites.word_id')
+            ->where('favorites.user_id', '=', auth()->user()->id)
+            ->select('words.word', 'favorites.created_at as added')
+            ->cursorPaginate();
+        return response()->json($history->toArray(), Response::HTTP_OK);
     }
 }

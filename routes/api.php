@@ -31,5 +31,7 @@ Route::group([
     Route::prefix('en')->group(function () {
         Route::get('/', [WordController::class, 'index'])->middleware('auth:api')->name('words.index');
         Route::get('/{word}', [WordController::class, 'show'])->middleware('auth:api')->name('words.show');
+        Route::post('/{word}/favorite', [WordController::class, 'favorite'])->middleware('auth:api')->name('words.favorite');
+        Route::delete('/{word}/unfavorite', [WordController::class, 'unfavorite'])->middleware('auth:api')->name('words.unfavorite');
     });
 });
