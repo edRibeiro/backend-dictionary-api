@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\FetchWordsJob;
+use App\Jobs\WordsSyncJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\LazyCollection;
 
 class LoadWordsCommand extends Command
 {
@@ -31,15 +30,16 @@ class LoadWordsCommand extends Command
         $url = 'https://raw.githubusercontent.com/dwyl/english-words/refs/heads/master/words_dictionary.json';
         $response = Http::get($url);
         if ($response->successful()) {
-            $body = $response->json();
-            $source = array_chunk($body, 100);
+            $source = $response->json();
             $bar = $this->output->createProgressBar(count($source));
             $bar->start();
-            foreach ($source as $key => $words) {
-                FetchWordsJob::dispatch($words);
+            foreach ($source as $word => $item) {
+                WordsSyncJob::dispatch($word);
                 $bar->advance();
             }
             $bar->finish();
+            $this->newLine();
+            $this->info('Completo!');
         } else {
             $this->error('Falha ao carregar o JSON da URL: ' . $url);
         }

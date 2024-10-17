@@ -27,10 +27,11 @@ class WordsSyncJob implements ShouldQueue
     public function handle(): void
     {
         $wordEntity = FreeDictionaryApi::words()->get($this->word);
-        if ($wordEntity) {
+        $wordModelExistes = Word::where('word', '=', $this->word)->first();
+        if ($wordEntity && !$wordModelExistes) {
             $wordModel = Word::create(['word' => $wordEntity->getWord(), 'license' => $wordEntity->getLicense()->getName(), 'license_url' => $wordEntity->getLicense()->getUrl()]);
             foreach ($wordEntity->getPhonetics() as $key => $phonetic) {
-                $wordModel->phonetics()->create(['text' => $phonetic->getText(), 'audio' => $phonetic->getAudio(), 'source_url' => $phonetic->getSourceUrl(), 'license' => $phonetic->getLicense()->getUrl()]);
+                $wordModel->phonetics()->create(['text' => $phonetic->getText(), 'audio' => $phonetic->getAudio(), 'source_url' => $phonetic->getSourceUrl(), 'license' => $phonetic->getLicense() ? $phonetic->getLicense()->getUrl() : null]);
             }
             foreach ($wordEntity->getMeanings() as $key => $meaning) {
                 $meaningModel =  $wordModel->meanings()->create(['part_of_speech' => $meaning->getPartOfSpeech()]);
