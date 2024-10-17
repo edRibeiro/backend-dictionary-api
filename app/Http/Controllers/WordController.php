@@ -46,6 +46,10 @@ class WordController extends Controller
                 ], Response::HTTP_NOT_FOUND);
             }
         }
+        $user = $data->users()->where('user_id', '=', auth()->user()->id)->first();
+        if (!$user) {
+            $data->users()->attach(auth()->user()->id);
+        }
         return new WordResource($data);
     }
 }

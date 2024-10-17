@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Word;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -15,7 +16,11 @@ class UserController extends Controller
 
     function history(): JsonResponse
     {
-        return response()->json(['message' => 'Not Implemented'], 501);
+        $history =     Word::join('user_word', 'words.id', '=', 'user_word.word_id')
+            ->where('user_word.user_id', '=', auth()->user()->id)
+            ->select('words.word', 'user_word.created_at as added')
+            ->cursorPaginate();
+        return response()->json($history->toArray(), Response::HTTP_OK);
     }
 
     function favorites(): JsonResponse
