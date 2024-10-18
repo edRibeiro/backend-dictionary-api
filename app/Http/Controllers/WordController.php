@@ -66,11 +66,17 @@ class WordController extends Controller
      */
     function index(): JsonResponse
     {
-        $data = Word::where(function (Builder $query) {
-            if (request()->has('search')) {
-                $query->where('word', 'LIKE', request()->query('search') . "%");
-            }
-        })->orderBy('word')->select('word')->cursorPaginate(request()->query('limit', 15));
+        $cacheKey = "word_cache_search_" . request()->query('search') . "_limit_" . request()->query('limit');
+        if (Cache::has($cacheKey)) {
+            $data =  Cache::get($cacheKey);
+        } else {
+            $data = Word::where(function (Builder $query) {
+                if (request()->has('search')) {
+                    $query->where('word', 'LIKE', request()->query('search') . "%");
+                }
+            })->orderBy('word')->select('word')->cursorPaginate(request()->query('limit', 15));
+            Cache::put($cacheKey, $data, now()->addMinutes(10));
+        }
         $responseArray = $data->toArray();
         $responseArray['data'] = Arr::map($responseArray['data'], function (array $item, int $key) {
             return $item['word'];
