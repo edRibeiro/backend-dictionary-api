@@ -11,6 +11,59 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * @OA\Schema(
+ *     schema="User",
+ *     type="object",
+ *     title="User",
+ *     description="User model",
+ *     required={"id", "name", "email"},
+ *     @OA\Property(
+ *         property="id",
+ *         type="string",
+ *         format="uuid",
+ *         example="9d43789a-1553-470c-b0ee-b33e000139bb",
+ *         description="User's unique identifier"
+ *     ),
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         example="User 1",
+ *         description="User's name"
+ *     ),
+ *     @OA\Property(
+ *         property="email",
+ *         type="string",
+ *         format="email",
+ *         example="example@email.com",
+ *         description="User's email address"
+ *     ),
+ *     @OA\Property(
+ *         property="created_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2024-10-17T02:11:57.000000Z",
+ *         description="Timestamp when the user was created"
+ *     ),
+ *     @OA\Property(
+ *         property="updated_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2024-10-17T02:11:57.000000Z",
+ *         description="Timestamp when the user was last updated"
+ *     ),
+ *     @OA\Property(
+ *         property="history",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/Word")
+ *     ),
+ *     @OA\Property(
+ *         property="favorites",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/Word")
+ *     ),
+ * )
+ */
 class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

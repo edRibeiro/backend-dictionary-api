@@ -8,6 +8,46 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @OA\Schema(
+ *     schema="Word",
+ *     type="object",
+ *     title="Word",
+ *     required={"word", "license", "license_url"},
+ *     @OA\Property(property="id", type="integer", description="ID of the word"),
+ *     @OA\Property(property="word", type="string", description="The word"),
+ *     @OA\Property(property="license", type="string", description="License of the word"),
+ *     @OA\Property(property="license_url", type="string", description="License URL of the word"),
+ *     @OA\Property(property="created_at", type="string", format="date-time", description="Creation timestamp"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", description="Last update timestamp"),
+ *     @OA\Property(property="deleted_at", type="string", format="date-time", description="Deletion timestamp", nullable=true),
+ *     @OA\Property(
+ *         property="phonetics",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/Phonetic")
+ *     ),
+ *     @OA\Property(
+ *         property="meanings",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/Meaning")
+ *     ),
+ *     @OA\Property(
+ *         property="sourceUrls",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/SourceUrl")
+ *     ),
+ *     @OA\Property(
+ *         property="viewer",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Property(
+ *         property="users",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/User")
+ *     ),
+ * )
+ */
 class Word extends Model
 {
     use HasFactory, SoftDeletes;
