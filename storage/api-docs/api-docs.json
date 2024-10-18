@@ -1,0 +1,1065 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Back-end Challenge - Dictionary",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/auth/signup": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Create a new user account",
+                "description": "Register a new user by providing their name, email, password, and password confirmation.",
+                "operationId": "6cf11ae1f0353336f0782d896b80cb94",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "User 1"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "example@email.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "User 1"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "example@email.com"
+                                        },
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "9d43789a-1553-470c-b0ee-b33e000139bb"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-10-17T02:11:57.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-10-17T02:11:57.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/signin": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "description": "Authenticates the user and returns an access token.",
+                "operationId": "authSignin",
+                "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string",
+                                        "example": "example@email.com"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "User ID",
+                                            "type": "string",
+                                            "example": "9d43789a-1553-470c-b0ee-b33e000139bb"
+                                        },
+                                        "name": {
+                                            "description": "User name",
+                                            "type": "string",
+                                            "example": "User 1"
+                                        },
+                                        "token": {
+                                            "description": "JWT token",
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L2FwaS9hdXRoL3NpZ25pbiIsImlhdCI6MTcyOTIwMTkxMCwiZXhwIjoxNzI5MjA1NTEwLCJuYmYiOjE3MjkyMDE5MTAsImp0aSI6IllrZTVOR3pFVjd5MVAyWnAiLCJzdWIiOiI5ZDQzNzg5YS0xNTUzLTQ3MGMtYjBlZS1iMzNlMDAwMTM5YmIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.O0_1TC_pSeZZvs_idvV85IUuD0InqtzXzBOKzAm2kSQ"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "The email field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout user",
+                "description": "Logs the user out by invalidating the token.",
+                "operationId": "authLogout",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh JWT token",
+                "description": "Refreshes the JWT token to extend its validity.",
+                "operationId": "authRefresh",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/me": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get current authenticated user",
+                "description": "Returns the authenticated user's information.",
+                "operationId": "getCurrentUser",
+                "responses": {
+                    "200": {
+                        "description": "User retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user/me/history": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get the user's word history",
+                "operationId": "e8d8d58a21a3dc4f6c47ccd672766709",
+                "responses": {
+                    "200": {
+                        "description": "A list of words that the user has previously added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "word": {
+                                                        "type": "string",
+                                                        "example": "a"
+                                                    },
+                                                    "added": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2024-10-18T17:29:59"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/user/me/history"
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "example": 15
+                                        },
+                                        "next_cursor": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "next_page_url": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "prev_cursor": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "prev_page_url": {
+                                            "type": "string",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user/me/favorites": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get the user's favorite words",
+                "operationId": "bfc4a912796532e7d0838b72f47803c3",
+                "responses": {
+                    "200": {
+                        "description": "A list of words that the user has favorited",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "word": {
+                                                        "type": "string",
+                                                        "example": "a"
+                                                    },
+                                                    "added": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2024-10-18T17:29:59"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/user/me/favorites"
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "example": 15
+                                        },
+                                        "next_cursor": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "next_page_url": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "prev_cursor": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "prev_page_url": {
+                                            "type": "string",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/entries/en": {
+            "get": {
+                "tags": [
+                    "Words"
+                ],
+                "summary": "Get a list of words",
+                "operationId": "9bd84e63635dbf6a050042ef7da4a727",
+                "responses": {
+                    "200": {
+                        "description": "A list of words",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "example": "http://localhost/api/entries/en"
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "example": 15
+                                        },
+                                        "next_cursor": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "next_page_url": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "prev_cursor": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "prev_page_url": {
+                                            "type": "string",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/entries/en/{word}": {
+            "get": {
+                "tags": [
+                    "Words"
+                ],
+                "summary": "Get details of a specific word",
+                "operationId": "5b0b5ee5fad7f1a498fece48906b450c",
+                "parameters": [
+                    {
+                        "name": "word",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the word",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Word"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Word not found"
+                    }
+                }
+            }
+        },
+        "/entries/en/{word}/favorite": {
+            "post": {
+                "tags": [
+                    "Words"
+                ],
+                "summary": "Favorite a word",
+                "operationId": "80802e491a2fe14c7f0ca63ca62b856d",
+                "parameters": [
+                    {
+                        "name": "word",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Word not found"
+                    }
+                }
+            }
+        },
+        "/entries/en/{word}/unfavorite": {
+            "delete": {
+                "tags": [
+                    "Words"
+                ],
+                "summary": "Unfavorite a word",
+                "operationId": "e8a40d2807ece60bde3dd56715030dea",
+                "parameters": [
+                    {
+                        "name": "word",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Word not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Definition": {
+                "title": "Definition",
+                "description": "Definition model",
+                "properties": {
+                    "id": {
+                        "description": "ID of the definition",
+                        "type": "integer"
+                    },
+                    "definition": {
+                        "description": "Text of the definition",
+                        "type": "string"
+                    },
+                    "example": {
+                        "description": "Example usage of the word in the definition",
+                        "type": "string"
+                    },
+                    "meaning_id": {
+                        "description": "ID of the related meaning",
+                        "type": "integer"
+                    },
+                    "meaning": {
+                        "$ref": "#/components/schemas/Meaning"
+                    },
+                    "synonyms": {
+                        "description": "List of synonyms for the definition",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DefinitionSynonym"
+                        }
+                    },
+                    "antonyms": {
+                        "description": "List of antonyms for the definition",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DefinitionAntonym"
+                        }
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp of the definition",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp of the definition",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "DefinitionAntonym": {
+                "title": "DefinitionAntonym",
+                "description": "Antonym for the definition",
+                "properties": {
+                    "id": {
+                        "description": "ID of the antonym",
+                        "type": "integer"
+                    },
+                    "word": {
+                        "description": "Antonym word",
+                        "type": "string"
+                    },
+                    "definition_id": {
+                        "description": "ID of the related definition",
+                        "type": "integer"
+                    },
+                    "definition": {
+                        "$ref": "#/components/schemas/Definition"
+                    }
+                },
+                "type": "object"
+            },
+            "DefinitionSynonym": {
+                "title": "DefinitionSynonym",
+                "description": "Synonym for the definition",
+                "properties": {
+                    "id": {
+                        "description": "ID of the synonym",
+                        "type": "integer"
+                    },
+                    "word": {
+                        "description": "Synonym word",
+                        "type": "string"
+                    },
+                    "definition_id": {
+                        "description": "ID of the related definition",
+                        "type": "integer"
+                    },
+                    "definition": {
+                        "$ref": "#/components/schemas/Definition"
+                    }
+                },
+                "type": "object"
+            },
+            "Meaning": {
+                "title": "Meaning",
+                "required": [
+                    "part_of_speech",
+                    "word_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID of the meaning",
+                        "type": "integer"
+                    },
+                    "part_of_speech": {
+                        "description": "Part of speech",
+                        "type": "string"
+                    },
+                    "word_id": {
+                        "description": "ID of the word related to this meaning",
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "Deletion timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "word": {
+                        "$ref": "#/components/schemas/Word"
+                    },
+                    "definitions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Definition"
+                        }
+                    },
+                    "synonyms": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeaningSynonym"
+                        }
+                    },
+                    "antonyms": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeaningAntonym"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "MeaningAntonym": {
+                "title": "MeaningAntonym",
+                "description": "Antonym for the meaning",
+                "properties": {
+                    "id": {
+                        "description": "ID of the antonym",
+                        "type": "integer"
+                    },
+                    "word": {
+                        "description": "Antonym word",
+                        "type": "string"
+                    },
+                    "meaning_id": {
+                        "description": "ID of the related meaning",
+                        "type": "integer"
+                    },
+                    "meaning": {
+                        "$ref": "#/components/schemas/Meaning"
+                    }
+                },
+                "type": "object"
+            },
+            "MeaningSynonym": {
+                "title": "MeaningSynonym",
+                "description": "Synonym for the meaning",
+                "properties": {
+                    "id": {
+                        "description": "ID of the synonym",
+                        "type": "integer"
+                    },
+                    "word": {
+                        "description": "Synonym word",
+                        "type": "string"
+                    },
+                    "meaning_id": {
+                        "description": "ID of the related meaning",
+                        "type": "integer"
+                    },
+                    "meaning": {
+                        "$ref": "#/components/schemas/Meaning"
+                    }
+                },
+                "type": "object"
+            },
+            "Phonetic": {
+                "title": "Phonetic",
+                "required": [
+                    "text",
+                    "audio",
+                    "word_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID of the phonetic",
+                        "type": "integer"
+                    },
+                    "text": {
+                        "description": "Phonetic transcription",
+                        "type": "string"
+                    },
+                    "audio": {
+                        "description": "URL of the audio pronunciation",
+                        "type": "string"
+                    },
+                    "word_id": {
+                        "description": "ID of the word related to this phonetic",
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "Deletion timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "word": {
+                        "$ref": "#/components/schemas/Word"
+                    }
+                },
+                "type": "object"
+            },
+            "SourceUrl": {
+                "title": "Source URL",
+                "required": [
+                    "url",
+                    "word_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID of the source URL",
+                        "type": "integer"
+                    },
+                    "url": {
+                        "description": "URL source",
+                        "type": "string"
+                    },
+                    "word_id": {
+                        "description": "ID of the word related to this source",
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "Deletion timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "word": {
+                        "$ref": "#/components/schemas/Word"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "required": [
+                    "id",
+                    "name",
+                    "email"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "User's unique identifier",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "9d43789a-1553-470c-b0ee-b33e000139bb"
+                    },
+                    "name": {
+                        "description": "User's name",
+                        "type": "string",
+                        "example": "User 1"
+                    },
+                    "email": {
+                        "description": "User's email address",
+                        "type": "string",
+                        "format": "email",
+                        "example": "example@email.com"
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the user was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-17T02:11:57.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the user was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-17T02:11:57.000000Z"
+                    },
+                    "history": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Word"
+                        }
+                    },
+                    "favorites": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Word"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Word": {
+                "title": "Word",
+                "required": [
+                    "word",
+                    "license",
+                    "license_url"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID of the word",
+                        "type": "integer"
+                    },
+                    "word": {
+                        "description": "The word",
+                        "type": "string"
+                    },
+                    "license": {
+                        "description": "License of the word",
+                        "type": "string"
+                    },
+                    "license_url": {
+                        "description": "License URL of the word",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "Deletion timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "phonetics": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Phonetic"
+                        }
+                    },
+                    "meanings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Meaning"
+                        }
+                    },
+                    "sourceUrls": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SourceUrl"
+                        }
+                    },
+                    "viewer": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        },
+        {
+            "name": "Words",
+            "description": "Words"
+        }
+    ]
+}
