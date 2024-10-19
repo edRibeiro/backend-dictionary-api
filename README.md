@@ -9,10 +9,7 @@
 - [Sobre o projeto](#boat-sobre-o-projeto)
 - [Tecnologias](#hammer-tecnologias)
 - [Como contribuir para o projeto](#raising_hand-como-contribuir-para-o-projeto)
-- [Features](#computer-features)
-- [Melhorias futuras](#up-melhorias-futuras)
 - [Como rodar esse projeto](#rocket-como-rodar-esse-projeto)
-- [Licença](#pencil-licença)
 - [Processo de Desenvolvimento](#processo-de-desenvolvimento)
 - [Estrutura da API](#estrutura-da-api)
 - [Escolha da Tecnologia](#escolha-da-tecnologia)
@@ -195,7 +192,7 @@ Aqui está a formatação das rotas seguindo o modelo que você forneceu:
 
 ### 3. Escolha da Tecnologia
 
-Optei por usar o Laravel por sua robustez e facilidade de uso na criação de APIs RESTful. O Laravel também possui suporte embutido para autenticação e gerenciamento de banco de dados, o que facilita o desenvolvimento.
+Optei por usar o Laravel por sua robustez e facilidade de uso na criação de APIs RESTful. O Laravel também possui suporte embutido para autenticação e gerenciamento de banco de dados, o que facilita o desenvolvimento. Para cache foi utilizado o Redis e para monitorar a fila foi utilizado o Laravel Horizon.
 
 ### 4. Modelagem de Dados
 
