@@ -126,12 +126,12 @@ class User extends Authenticatable implements JWTSubject
     public function history(): BelongsToMany
     {
         return $this->belongsToMany(Word::class, 'user_word', 'user_id', 'word_id')
-            ->withTimestamps();
+            ->withTimestamps()->withPivot('created_at');
     }
 
     public function favorites(): BelongsToMany
     {
         return $this->belongsToMany(Word::class, 'favorites', 'user_id', 'word_id')
-            ->withTimestamps();
+            ->withTimestamps()->withPivot('created_at');
     }
 }
