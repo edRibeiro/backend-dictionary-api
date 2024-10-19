@@ -6,14 +6,21 @@
 
 ## Índice
 
-- <a href="#boat-sobre-o-projeto">Sobre o projeto</a>
-- <a href="#hammer-tecnologias">Tecnologias</a>
-- <a href="#raising_hand-como-contribuir-para-o-projeto">Como contribuir para o projeto</a>
-- <a href="#computer-features">Features</a>
-    
-
-- <a href="#up-melhorias-futuras">Melhorias futuras</a>
-- <a href="#rocket-como-rodar-esse-projeto">Como rodar esse projeto</a>
+- [Sobre o projeto](#boat-sobre-o-projeto)
+- [Tecnologias](#hammer-tecnologias)
+- [Como contribuir para o projeto](#raising_hand-como-contribuir-para-o-projeto)
+- [Features](#computer-features)
+- [Melhorias futuras](#up-melhorias-futuras)
+- [Como rodar esse projeto](#rocket-como-rodar-esse-projeto)
+- [Licença](#pencil-licença)
+- [Processo de Desenvolvimento](#processo-de-desenvolvimento)
+- [Estrutura da API](#estrutura-da-api)
+- [Escolha da Tecnologia](#escolha-da-tecnologia)
+- [Modelagem de Dados](#modelagem-de-dados)
+- [Implementação da API](#implementação-da-api)
+- [Implementação de Cache](#implementação-de-cache)
+- [Documentação da API](#documentação-da-api)
+- [Testes Automatizados](#testes-automatizados)
 - <a href="#pencil-licença">Licença</a>
  
 ## :boat: Sobre o projeto
